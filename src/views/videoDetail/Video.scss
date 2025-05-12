@@ -1,0 +1,28 @@
+.video-row {
+    // padding: 4em 2em 0 2em;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    // padding-top: 56.25%;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+
+    .responsive {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.no-video {
+    padding: 4em 2em 0;
+}
+
+h1 {
+    font-size: 2em;
+}

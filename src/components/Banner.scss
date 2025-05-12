@@ -1,0 +1,91 @@
+.header {
+    height: 90vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
+    position: relative;
+
+    @media only screen and (max-width: 768px) {
+        min-height: 40vh;
+        height: 100%;
+    }
+
+    .header-description {
+        border-radius: 4px;
+        margin: 2em 2em 5em 2em;
+        z-index: 1;
+        width: 100%;
+
+        @media only screen and (min-width: 768px) {
+            width: 50%;
+        }
+    }
+
+    h1 {
+        color: white;
+        text-align: left;
+        font-size: 3em;
+        padding: 0;
+        text-shadow: 2px 2px 30px #131212;
+        line-height: 1.2;
+
+        @media only screen and (max-width: 768px) {
+            font-size: 2em;
+        }
+    }
+
+    h2 {
+        color: white;
+        text-align: left;
+        font-size: 1em;
+        padding: 1em 0;
+        text-shadow: 2px 2px 30px #131212;
+    }
+
+    h3 {
+        color: white;
+        text-align: left;
+        font-size: 1em;
+        padding-top: -1em;
+        padding-bottom: 2em;
+        text-shadow: 2px 2px 30px #131212;
+    }
+
+    &::before {
+        content: '';
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, #000000 0%, #000000 0%, rgba(28, 65, 73, 0) 51%);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.banner-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-family: inherit;
+
+    .banner-button {
+        box-shadow: 2px 2px 45px #1312129c;
+        padding: .5em 1em;
+        border-radius: 4px;
+        background: #6b65655e;
+        border: none;
+        margin-right: .5em;
+        color: white;
+        font-size: 1.5em;
+        transition: .4s ease;
+        margin-bottom: 1em;
+
+        &:hover {
+            cursor: pointer;
+            opacity: .7;
+        }
+    }
+}

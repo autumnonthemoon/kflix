@@ -1,0 +1,38 @@
+main.search-container {
+    padding: 4em 2em 0 2em;
+
+    .search-bar {
+        background-color: #3b3b3b;
+        border: 0;
+        padding: 1em;
+        width: 100%;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: white;
+    }
+
+    .results {
+        display: flex;
+        gap: 1rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+
+        .poster-image {
+            flex: 0 0 calc(25% - 1rem);
+
+            &:hover{
+                box-shadow: 0 20px 42px -31px #343030;
+            }
+
+            .row-poster {
+                object-fit: cover;
+                width: 100%;
+            }
+
+            @media (max-width:768px) {
+                flex: 1 0 100%;
+            }
+        }
+    }
+}

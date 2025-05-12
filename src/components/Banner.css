@@ -1,0 +1,114 @@
+.header {
+  height: 80vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: start;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  position: relative;
+}
+
+@media only screen and (max-width: 768px) {
+  .header {
+    min-height: 40vh;
+    height: 100%;
+  }
+}
+
+.header .header_description {
+  padding: 2em 2em 6em 0;
+  border-radius: 4px;
+  margin: 2em;
+  z-index: 1;
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .header .header_description {
+    width: 50%;
+  }
+}
+
+.header h1 {
+  color: white;
+  text-align: left;
+  font-size: 3em;
+  padding: 0;
+  text-shadow: 2px 2px 30px #131212;
+}
+
+@media only screen and (max-width: 768px) {
+  .header h1 {
+    font-size: 2em;
+  }
+}
+
+.header h2 {
+  color: white;
+  text-align: left;
+  font-size: 1em;
+  padding: 1em 0;
+  text-shadow: 2px 2px 30px #131212;
+}
+
+.header h3 {
+  color: white;
+  text-align: left;
+  font-size: 1em;
+  padding-top: -1em;
+  padding-bottom: 2em;
+  text-shadow: 2px 2px 30px #131212;
+}
+
+.header::before {
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: -webkit-gradient(linear, left top, right top, from(#000000), color-stop(0%, #000000), color-stop(51%, rgba(28, 65, 73, 0)));
+  background: linear-gradient(90deg, #000000 0%, #000000 0%, rgba(28, 65, 73, 0) 51%);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.banner_buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  font-family: inherit;
+}
+
+.banner_buttons .banner_button {
+  -webkit-box-shadow: 2px 2px 45px #1312129c;
+  box-shadow: 2px 2px 45px #1312129c;
+  padding: .5em 1em;
+  border-radius: 4px;
+  background: #6b65655e;
+  border: none;
+  margin-right: .5em;
+  color: white;
+  font-size: 1.5em;
+  -webkit-transition: .4s ease;
+  transition: .4s ease;
+  margin-bottom: 1em;
+}
+
+.banner_buttons .banner_button:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+/*# sourceMappingURL=Banner.css.map */
