@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { Movie } from "../data/types/types";
 import "./Row.scss";
 import { Link } from "react-router-dom";
@@ -15,11 +15,48 @@ interface RowPropsTypes {
 
 export default function Row(props: RowPropsTypes): JSX.Element {
     const { title, isLargeRow = false, movies, favorite, handleFave, baseUrl, setShowPopupCard } = props
+    const [hidePrevArrow, setHidePrevArrow] = useState<boolean>(true)
+    const [hideNextArrow, setHideNextArrow] = useState<boolean>(false)
+
+    const containerRef = useRef<HTMLDivElement>(null)
+    const container = containerRef.current
+    const scrollItem = (direction: string) => {
+
+        if(containerRef.current) {
+            const itemWidth = container?.firstElementChild?.clientWidth || 0
+
+            if (!container) {
+                return
+            }
+
+            if(direction == 'next'){
+                container.scrollBy({ left: itemWidth, behavior: 'smooth' })
+            } else {
+                container.scrollBy({ left: -itemWidth, behavior: 'smooth' })
+            }
+
+            setTimeout(() => {
+                const firstChild = container.children[0] as HTMLElement
+                const lastChild = container.children[container.children.length - 1] as HTMLElement
+              
+                const isAtStart = container.scrollLeft <= firstChild.offsetLeft + 1
+              
+                const containerRightEdge = container.scrollLeft + container.clientWidth
+                const lastItemRightEdge = lastChild.offsetLeft + lastChild.offsetWidth
+                const isAtEnd = containerRightEdge >= lastItemRightEdge - 1
+            
+                setHidePrevArrow(isAtStart);
+                setHideNextArrow(isAtEnd); // <-- this was missing
+            }, 300)
+
+        }
+    }
 
     return (
-        <div className="row">
+        <div className={`row ${isLargeRow ? ' large' : 'small'}`}>
+            <div className={`prev ${hidePrevArrow ? 'hide' : ''}`} onClick={() => scrollItem('prev')}></div>
             <h2>{title}</h2>
-            <div className={"row-posters" + (isLargeRow ? ' row-large' : '')}>
+            <div className={`row-posters ${isLargeRow ? ' row-large' : ''}`} ref={containerRef}>
                 {movies.map(movie => (
                     movie.vote_average !== '' && movie.poster_path && movie.backdrop_path &&
                     (
@@ -31,7 +68,7 @@ export default function Row(props: RowPropsTypes): JSX.Element {
                             <div className="info">
                                 <div className="rating">Rating: {movie.vote_average} </div>
                                 <div className="title">{movie?.name || movie?.title || movie?.original_name}</div>
-                                <div onClick={(e) => { handleFave(movie.id); e.stopPropagation()}}  className="thumbnail-icons-actions"> <svg
+                                <div onClick={(e) => { handleFave(movie.id); e.stopPropagation() }} className="thumbnail-icons-actions"> <svg
                                     id="heart"
                                     viewBox="0 -28 512.00002 512"
                                     className={favorite.includes(movie.id) ? "favorite" : "notFavorite"}
@@ -45,7 +82,9 @@ export default function Row(props: RowPropsTypes): JSX.Element {
                         </div>
                     )
                 ))}
+
             </div>
+            <div className={`next ${hideNextArrow ? 'hide' : ''}`} onClick={() => scrollItem('next')}></div>
         </div>
     )
 

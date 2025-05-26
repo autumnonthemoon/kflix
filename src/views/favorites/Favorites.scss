@@ -6,11 +6,7 @@
         object-fit: cover;
         object-position: bottom;
 
-        @media screen and (min-width: 840px) {
-            height: 300px;
-        }
     }
-
 }
 
 .row-favorite {
@@ -21,7 +17,14 @@
     gap: 1rem;
 
     .poster-image {
-        flex: 0 0 calc(25% - 1rem);
+        flex: 0 0 calc(33% - 1rem);
+        position: relative;
+        transition: .4s ease;
+        flex-wrap: wrap;
+
+        img {
+            border-radius: 4px;
+        }
 
         &:hover {
             box-shadow: 0 5px 45px -12px #222121;
@@ -39,25 +42,72 @@
             opacity: 0;
             z-index: 9;
             transition: .4s ease;
-            position: relative;
             position: absolute;
             bottom: -50px;
             width: 100%;
             max-width: 100%;
             text-shadow: 0px 0px 11px #201d1d;
             font-weight: 600;
-            background: rgb(37 38 37 / 90%);
+            background:var(--color-card-info);
             color: white;
-        }
 
-        .rating {
-            bottom: 20px;
-            padding: 10px 10px 5px 10px;
-        }
-
-        .title {
-            bottom: -16px;
-            padding: 5px 10px 10px 10px;
+            .rating {
+                bottom: 20px;
+                padding: 10px 10px 5px 10px;
+            }
+    
+            .title {
+                bottom: -16px;
+                padding: 5px 10px 10px 10px;
+            }
+    
+            
+            .thumbnail-icons-actions {
+                display: flex;
+                align-items: center;
+                color: rgb(181, 179, 179);
+                justify-content: end;
+    
+                svg {
+                    width: 40px;
+                    height: 40px;
+                    pointer-events: all;
+                    margin: 4px 2px;
+                    transition: .4s ease;
+    
+                    &:hover {
+    
+                        &.favorite {
+                            fill: #ff006c;
+                        }
+    
+                        &.notFavorite {
+                            fill: #FFF;
+                        }
+    
+                        fill: #FFF;
+    
+                    }
+                }
+    
+                .video-icon {
+                    fill: var(--color-icons);
+                }
+    
+                a {
+                    display: flex;
+                    align-items: center;
+                }
+    
+                .favorite {
+                    fill: hotpink;
+                }
+    
+                .notFavorite {
+                    fill: var(--color-icons);
+                }
+    
+            }
         }
     }
 }

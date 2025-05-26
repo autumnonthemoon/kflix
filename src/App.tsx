@@ -13,6 +13,7 @@ import requests from "./data/requests";
 import { Movie } from './data/types/types'
 import Nav from "./components/Nav";
 import Search from "./views/search/Search";
+import { ThemeProvider } from "./context/ThemeContext";
 
 export default function App(): JSX.Element {
   const baseUrl = "https://image.tmdb.org/t/p/original/"
@@ -108,19 +109,20 @@ export default function App(): JSX.Element {
   }, [])
 
   return (
-    <div className="App">
-      <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/websitedemo/movie-app' : ''}>
-        <Nav show={show} />
-
-        <Routes>
-          <Route path="/" element={<Home movies={movies} dramas={dramas} horrors={horrors} variety={variety} handleFave={handleFave} favorite={favorite} baseUrl={baseUrl} />} />
-          <Route path="/favorites" element={<Favorites handleFave={handleFave} findFavorite={findFavorite} baseUrl={baseUrl} favorite={favorite} />} />
-          <Route path="/details/:id" element={<Video />} />
-          <Route path="/search" element={<Search handleFave={handleFave} favorite={favorite} baseUrl={baseUrl} />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    <ThemeProvider>
+      <div className="App">
+        <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/websitedemo/movie-app' : ''}>
+          <Nav show={show} />
+          <Routes>
+            <Route path="/" element={<Home movies={movies} dramas={dramas} horrors={horrors} variety={variety} handleFave={handleFave} favorite={favorite} baseUrl={baseUrl} />} />
+            <Route path="/favorites" element={<Favorites handleFave={handleFave} findFavorite={findFavorite} baseUrl={baseUrl} favorite={favorite} />} />
+            <Route path="/details/:id" element={<Video />} />
+            <Route path="/search" element={<Search handleFave={handleFave} favorite={favorite} baseUrl={baseUrl} />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
+  )
 }
 
 

@@ -17,7 +17,7 @@
         top: 0;
 
         .popup {
-            background-color: #000000bf;
+            background-color: var(--main-bg);
             max-width: 40%;
             min-height: 50vh;
             height: auto;
@@ -31,6 +31,8 @@
             overflow: hidden;
             transition: top 0.6s ease, opacity 0.4s ease;
             opacity: 0;
+            max-height: 80vh;
+            overflow: auto;
             
             .content {
                 .poster_container {
@@ -50,7 +52,7 @@
                     margin-bottom: 1rem;
                 }
 
-                .thumbnail_icons_actions {
+                .thumbnail-icons-actions {
                     display: flex;
                     align-items: center;
                     color: rgb(181, 179, 179);
@@ -71,17 +73,16 @@
                                 fill: #ff006c;
                             }
                 
-                            &.notFavorite {
-                                fill: #FFF;
-                            }
+                            // &.notFavorite {
+                            //     fill: #FFF;
+                            // }
                 
-                            fill: #FFF;
-                
+                            // fill: #FFF;
                         }
                     }
                 
                     .video_icon {
-                        fill: rgb(181, 179, 179);
+                        fill: var(--color-icons);
                     }
                 
                     a {
@@ -94,7 +95,7 @@
                     }
                 
                     .notFavorite {
-                        fill: rgb(181, 179, 179);
+                        fill: var(--color-icons);
                     }
                 
                 }
@@ -104,13 +105,22 @@
 
     &.show {
         opacity: 1;
-        z-index: 15;
+        z-index: 20;
 
         .overlay {
 
             .popup {
                 top: 50%;
                 opacity: 1;
+            }
+        }
+    }
+
+    @media (max-width:768px) {
+        .overlay {
+            .popup {
+                width: 90%;
+                max-width: 90vw;
             }
         }
     }

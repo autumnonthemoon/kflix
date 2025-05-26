@@ -2,13 +2,13 @@ main.search-container {
     padding: 4em 2em 0 2em;
 
     .search-bar {
-        background-color: #3b3b3b;
+        background-color: var(--color-input);
         border: 0;
         padding: 1em;
         width: 100%;
         border-radius: 4px;
         box-sizing: border-box;
-        color: white;
+        color: var(--color-text);
     }
 
     .results {
@@ -19,10 +19,23 @@ main.search-container {
         margin-top: 2rem;
 
         .poster-image {
-            flex: 0 0 calc(25% - 1rem);
+            flex: 0 0 calc(33% - 1rem);
+            position: relative;
 
-            &:hover{
-                box-shadow: 0 20px 42px -31px #343030;
+            &:hover {
+                box-shadow: 0 5px 45px -12px #222121;
+                transform: scale(1.2, 1.2);
+                z-index: 1;
+                cursor: pointer;
+                transition: .4s ease;
+
+                img {
+                    border-radius: 4px;
+                }
+
+                &>.info {
+                    opacity: 1;
+                }
             }
 
             .row-poster {
@@ -32,6 +45,79 @@ main.search-container {
 
             @media (max-width:768px) {
                 flex: 1 0 100%;
+            }
+
+            .info {
+                font-size: .8em;
+                opacity: 0;
+                z-index: 9;
+                transition: .4s ease;
+                position: absolute;
+                bottom: -50px;
+                width: 100%;
+                max-width: 100%;
+                text-shadow: 0px 0px 11px #201d1d;
+                font-weight: 600;
+                background: var(--color-card-info);
+                color: white;
+
+                .rating {
+                    bottom: 20px;
+                    padding: 10px 10px 5px 10px;
+                }
+
+                .title {
+                    bottom: -16px;
+                    padding: 5px 10px 10px 10px;
+                }
+
+
+                .thumbnail-icons-actions {
+                    display: flex;
+                    align-items: center;
+                    color: rgb(181, 179, 179);
+                    justify-content: end;
+
+                    svg {
+                        width: 40px;
+                        height: 40px;
+                        pointer-events: all;
+                        margin: 4px 2px;
+                        transition: .4s ease;
+
+                        &:hover {
+
+                            &.favorite {
+                                fill: #ff006c;
+                            }
+
+                            &.notFavorite {
+                                fill: #FFF;
+                            }
+
+                            fill: #FFF;
+
+                        }
+                    }
+
+                    .video-icon {
+                        fill: var(--color-icons);
+                    }
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .favorite {
+                        fill: hotpink;
+                    }
+
+                    .notFavorite {
+                        fill: var(--color-icons);
+                    }
+
+                }
             }
         }
     }

@@ -46,7 +46,7 @@ export default function PopupCard(props: PopupCardPropsTypes): JSX.Element {
                         {movie.overview}
                     </div>
 
-                    <div onClick={(e) => { handleFave(movie.id); e.stopPropagation()}} className="thumbnail_icons_actions"> <svg
+                    <div onClick={(e) => { handleFave(movie.id); e.stopPropagation()}} className="thumbnail-icons-actions"> <svg
                         id="heart"
                         viewBox="0 -28 512.00002 512"
                         className={favorite.includes(movie.id) ? "favorite" : "notFavorite"}
