@@ -33,6 +33,8 @@
             opacity: 0;
             max-height: 80vh;
             overflow: auto;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
             
             .content {
                 .poster_container {

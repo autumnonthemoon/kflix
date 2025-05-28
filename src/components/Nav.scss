@@ -69,6 +69,12 @@ nav {
             }
         }
 
+        .right {
+            .hamburger-menu {
+                background-color: var(--color-icons-menu);
+            }
+        }
+
     }
 
     .toggle-mode {
@@ -142,7 +148,7 @@ nav {
         mask: url('../img/menu.svg') no-repeat 50% 50% / contain;
         width: 20px;
         height: 20px;
-        background-color: var(--color-icons-menu);
+        background-color: white;
         cursor: pointer;
         display: none;
     }
@@ -172,6 +178,7 @@ nav {
                     transition-delay: .4s;
                     opacity: 0;
                     display: block;
+
                 }
             }
         }
@@ -203,9 +210,16 @@ nav {
                     display: block;
                     width: 100%;
 
+
                     a {
+                        color: var(--color-text);
                         transform: rotate(0) translate(0);
                         opacity: 1;
+                        text-shadow: none;
+
+                        .search-icon {
+                            background-color:var(--color-icons-menu);
+                        }
                     }
 
                     &.close {
@@ -218,7 +232,7 @@ nav {
                             mask: url('../img/close.svg') no-repeat 50% 50% / contain;
                             width: 20px;
                             height: 20px;
-                            background-color: white;
+                            background-color: var(--color-text);
                             cursor: pointer;
                         }
                     }

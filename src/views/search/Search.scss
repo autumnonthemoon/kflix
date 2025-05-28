@@ -22,16 +22,16 @@ main.search-container {
             flex: 0 0 calc(33% - 1rem);
             position: relative;
 
+            img {
+                border-radius: 4px;
+            }
+
             &:hover {
                 box-shadow: 0 5px 45px -12px #222121;
                 transform: scale(1.2, 1.2);
                 z-index: 1;
                 cursor: pointer;
                 transition: .4s ease;
-
-                img {
-                    border-radius: 4px;
-                }
 
                 &>.info {
                     opacity: 1;
@@ -60,6 +60,8 @@ main.search-container {
                 font-weight: 600;
                 background: var(--color-card-info);
                 color: white;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
 
                 .rating {
                     bottom: 20px;

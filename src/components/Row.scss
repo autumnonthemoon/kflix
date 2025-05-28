@@ -358,4 +358,14 @@
             }
         }
     }
+
+    @media (max-width:600px) {
+        .row-posters {
+            .poser-image {
+                &:hover {
+                    transform: scale(1);
+                }
+            }
+        }
+    }
 }
