@@ -361,9 +361,13 @@
 
     @media (max-width:600px) {
         .row-posters {
-            .poser-image {
+            .poster-image {
                 &:hover {
                     transform: scale(1);
+
+                    .info {
+                        opacity: 0;
+                    }
                 }
             }
         }
