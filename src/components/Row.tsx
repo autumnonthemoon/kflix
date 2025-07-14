@@ -29,10 +29,10 @@ export default function Row(props: RowPropsTypes): JSX.Element {
                 return
             }
 
-            if(direction == 'next'){
-                container.scrollBy({ left: itemWidth, behavior: 'smooth' })
+            if(direction == "next"){
+                container.scrollBy({ left: itemWidth, behavior: "smooth" })
             } else {
-                container.scrollBy({ left: -itemWidth, behavior: 'smooth' })
+                container.scrollBy({ left: -itemWidth, behavior: "smooth" })
             }
 
             setTimeout(() => {
@@ -45,22 +45,22 @@ export default function Row(props: RowPropsTypes): JSX.Element {
                 const lastItemRightEdge = lastChild.offsetLeft + lastChild.offsetWidth
                 const isAtEnd = containerRightEdge >= lastItemRightEdge - 1
             
-                setHidePrevArrow(isAtStart);
-                setHideNextArrow(isAtEnd); // <-- this was missing
+                setHidePrevArrow(isAtStart)
+                setHideNextArrow(isAtEnd)
             }, 300)
 
         }
     }
 
     return (
-        <div className={`row ${isLargeRow ? ' large' : 'small'}`}>
-            <div className={`prev ${hidePrevArrow ? 'hide' : ''}`} onClick={() => scrollItem('prev')}></div>
+        <section className={`row ${isLargeRow ? " large" : "small"}`}>
+            <button className={`prev ${hidePrevArrow ? "hide" : ""}`} onClick={() => scrollItem("prev")}></button>
             <h2>{title}</h2>
-            <div className={`row-posters ${isLargeRow ? ' row-large' : ''}`} ref={containerRef}>
-                {movies.map(movie => (
-                    movie.vote_average !== '' && movie.poster_path && movie.backdrop_path &&
+            <div className={`row-posters ${isLargeRow ? " row-large" : ""}`} ref={containerRef}>
+                {movies.length > 0 && movies.map(movie => (
+                    movie.vote_average !== "" && movie.poster_path && movie.backdrop_path &&
                     (
-                        <div className={"poster-image" + (isLargeRow ? ' poster-large' : ' poster-small')} key={movie.id}
+                        <div className={"poster-image" + (isLargeRow ? " poster-large" : " poster-small")} key={movie.id}
                             onClick={() => setShowPopupCard(movie)}>
                             <img className={"row-poster" + (isLargeRow ? " row-posterLarge" : " row-posterSmall")}
                                 src={`${baseUrl}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} alt={movie.name}
@@ -84,8 +84,8 @@ export default function Row(props: RowPropsTypes): JSX.Element {
                 ))}
 
             </div>
-            <div className={`next ${hideNextArrow ? 'hide' : ''}`} onClick={() => scrollItem('next')}></div>
-        </div>
+            <button className={`next ${hideNextArrow ? "hide" : ""}`} onClick={() => scrollItem("next")}></button>
+        </section>
     )
 
 }

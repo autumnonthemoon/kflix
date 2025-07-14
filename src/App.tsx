@@ -1,128 +1,134 @@
 import React, { useState, useEffect, JSX } from "react";
 import {
-  BrowserRouter,
-  Routes,
-  Route,
+	BrowserRouter,
+	Routes,
+	Route,
 } from "react-router-dom";
-import './App.scss';
+import "./App.scss";
 import Home from "./views/home/Home";
 import Favorites from "./views/favorites/Favorites";
 import Video from "./views/videoDetail/Video";
-import axios from "./axios";
 import requests from "./data/requests";
-import { Movie } from './data/types/types'
+import { Movie } from "./data/types/types"
 import Nav from "./components/Nav";
 import Search from "./views/search/Search";
 import { ThemeProvider } from "./context/ThemeContext";
+import useFetch from "./hooks/useFetch";
 
 export default function App(): JSX.Element {
-  const baseUrl = "https://image.tmdb.org/t/p/original/"
-  const [movies, setMovies] = useState<Movie[]>([])
-  const [dramas, setDramas] = useState<Movie[]>([])
-  const [horrors, setHorrors] = useState<Movie[]>([])
-  const [variety, setVariety] = useState<Movie[]>([])
-  const [favorite, setFavorite] = useState<string[]>(() => {
-    try {
-      const data = localStorage.getItem('faves')
-      return data ? JSON.parse(data) : []
-    } catch {
-      return []
-    }
-  })
+	const baseUrl = "https://image.tmdb.org/t/p/original/"
+	const { data: dramas, loading: loadingDramas, error: errorDramas } = useFetch<Movie[]>(requests.fetchKoreanDramas)
+	const { data: movies, loading: loadingMovies, error: errorMovies } = useFetch<Movie[]>(requests.fetchKoreanMovies)
+	const { data: horrors, loading: loadingHorrors, error: errorHorrors } = useFetch<Movie[]>(requests.fetchHorrorMovies)
+	const { data: variety, loading: loadingVariety, error: errorVariety } = useFetch<Movie[]>(requests.fetchComedyMovies)
 
-  const [allMovies, setAllMovies] = useState<Movie[]>([])
-  let findFavorite = allMovies.filter(movie => favorite.includes(movie.id))
+	const [favorite, setFavorite] = useState<string[]>(() => {
+		try {
+			const data = localStorage.getItem("faves")
+			return data ? JSON.parse(data) : []
+		} catch {
+			return []
+		}
+	})
 
-  //get movies from api
-  useEffect(() => {
-    async function fetchAllMovies() {
-      try {
-        const requestDramas = await axios.get(requests.fetchKoreanDramas)
-        setDramas(requestDramas.data.results)
+	const [allMovies, setAllMovies] = useState<Movie[]>([])
+	let findFavorite = allMovies.filter(movie => favorite.includes(movie.id))
 
-        const requestMovies = await axios.get(requests.fetchKoreanMovies)
-        setMovies(requestMovies.data.results)
+	//combine all movies and remove duplicates
+	useEffect(() => {
+		// Combine all movies or empty arrays
+		const combined = [
+			...(dramas ?? []),
+			...(movies ?? []),
+			...(horrors ?? []),
+			...(variety ?? []),
+		]
 
-        const requestHorrors = await axios.get(requests.fetchHorrorMovies)
-        setHorrors(requestHorrors.data.results)
+		// Remove duplicates by id using a Map
+		const uniqueMovies = Array.from(
+			new Map(combined.map(movie => [movie.id, movie])).values()
+		)
 
-        const requestVariety = await axios.get(requests.fetchComedyMovies)
-        setVariety(requestVariety.data.results)
+		setAllMovies(uniqueMovies)
+	}, [dramas, movies, horrors, variety])
 
-        if (!requestDramas && !requestMovies && !requestVariety && !requestHorrors) {
-          return 0
-        } else {
-          return { requestMovies, requestDramas, requestHorrors, requestVariety }
-        }
-      } catch (error) {
-        console.warn(error)
-      }
+	useEffect(() => {
+		localStorage.setItem("faves", JSON.stringify(favorite))
+	}, [favorite])
 
-    }
-    fetchAllMovies()
-  }, [])
+	function handleFave(id: string) {
+		//add favorites
+		let filter = favorite.includes(id)
 
-  //combine all movies and remove duplicates
-  useEffect(() => {
-    let allMovies = [...new Set([...dramas, ...movies, ...horrors, ...variety])]
-    allMovies = allMovies.filter((elem, index, self) => self.findIndex(
-      (t) => { return (t.id === elem.id) }) === index)
-    setAllMovies(allMovies)
+		if (!filter) {
+			setFavorite(oldArray => [...oldArray, id])
+		}
 
-  }, [variety])
+		// toggle favorite for heart icon
+		if (filter) {
+			setFavorite(favorite.filter(item => item !== id))
+		}
+	}
 
-  useEffect(() => {
-    localStorage.setItem('faves', JSON.stringify(favorite))
-  }, [favorite])
+	const [show, handleShow] = useState(false)
 
-  function handleFave(id: string) {
-    //add favorites
-    let filter = favorite.includes(id)
+	const handleScroll = () => {
+		if (window.scrollY >= 10) {
+			handleShow(true)
+		} else {
+			handleShow(false)
+		}
+	}
 
-    if (!filter) {
-      setFavorite(oldArray => [...oldArray, id])
-    }
+	// scroll add bg
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll)
 
-    // toggle favorite for heart icon
-    if (filter) {
-      setFavorite(favorite.filter(item => item !== id))
-    }
-  }
+		return () => {
+			window.removeEventListener("scroll", handleScroll)
+		}
+	}, [])
 
-  const [show, handleShow] = useState(false)
+	if (loadingDramas || loadingMovies || loadingHorrors || loadingVariety) return <p>Loading...</p>
+	if (errorDramas || errorMovies || errorHorrors || errorVariety) return <p>Error loading movies</p>
 
-  const handleScroll = () => {
-    if (window.scrollY >= 10) {
-      handleShow(true)
-    } else {
-      handleShow(false)
-    }
-  }
-
-  // scroll add bg
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
-
-  return (
-    <ThemeProvider>
-      <div className="App">
-        <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/websitedemo/movie-app' : ''}>
-          <Nav show={show} />
-          <Routes>
-            <Route path="/" element={<Home movies={movies} dramas={dramas} horrors={horrors} variety={variety} handleFave={handleFave} favorite={favorite} baseUrl={baseUrl} />} />
-            <Route path="/favorites" element={<Favorites handleFave={handleFave} findFavorite={findFavorite} baseUrl={baseUrl} favorite={favorite} />} />
-            <Route path="/details/:id" element={<Video />} />
-            <Route path="/search" element={<Search handleFave={handleFave} favorite={favorite} baseUrl={baseUrl} />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </ThemeProvider>
-  )
+	return (
+		<ThemeProvider>
+			<div className="App">
+				<BrowserRouter basename={process.env.NODE_ENV === "production" ? "/websitedemo/movie-app" : ""}>
+					<Nav show={show} />
+					<Routes>
+						<Route path="/"
+							element={<Home
+								movies={movies ?? []}
+								dramas={dramas ?? []}
+								horrors={horrors ?? []}
+								variety={variety ?? []}
+								handleFave={handleFave}
+								favorite={favorite}
+								baseUrl={baseUrl} />}
+						/>
+						<Route path="/favorites"
+							element={<Favorites
+								handleFave={handleFave}
+								findFavorite={findFavorite}
+								baseUrl={baseUrl}
+								favorite={favorite} />}
+						/>
+						<Route path="/details/:id"
+							element={<Video />}
+						/>
+						<Route path="/search"
+							element={<Search
+								handleFave={handleFave}
+								favorite={favorite}
+								baseUrl={baseUrl} />}
+						/>
+					</Routes>
+				</BrowserRouter>
+			</div>
+		</ThemeProvider>
+	)
 }
 
 

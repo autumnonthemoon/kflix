@@ -1,9 +1,9 @@
-import React, { useState, useEffect, JSX } from 'react';
+import React, { useState, useEffect, JSX } from "react";
 import "./Banner.scss";
-import axios from '../axios';
-import requests from '../data/requests';
-import { Link } from 'react-router-dom';
-import { Movie } from '../data/types/types';
+import axios from "../axios";
+import requests from "../data/requests";
+import { Link } from "react-router-dom";
+import { Movie } from "../data/types/types";
 const baseUrl = "https://image.tmdb.org/t/p/original/";
 
 export default function Banner():JSX.Element {
