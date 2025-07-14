@@ -8,6 +8,7 @@ export default function useFetch<T = unknown>(url:string) {
 
 	useEffect(()=> {
 		if(!url) return
+		
 		fetch(baseUrl + url)
 			.then((res) => {
 				if(!res.ok) throw new Error("something went wrong")

@@ -28,7 +28,6 @@ export default function PopupCard(props: PopupCardPropsTypes): JSX.Element {
 		}
 	}, [])
 
-
 	return <div className="overlay" onClick={removeMovie}>
 		<div className="popup" onClick={(e) => e.stopPropagation()}>
 			{movie && <div className="content">

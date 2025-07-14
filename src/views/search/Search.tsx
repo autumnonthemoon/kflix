@@ -35,10 +35,8 @@ export default function Search(props: SearchPropsTypes): JSX.Element {
 	const { data: varietyRes, loading: loadingVariety, error: errorVariety } = useFetch<Movie[]>(requests.fetchComedyMovies)
 
 	useEffect(() => {
-
-		console.log(dramasRes, moviesRes, horrorsRes, varietyRes)
-		if (!dramasRes && !moviesRes && !horrorsRes && !varietyRes) return
-
+		if (!dramasRes || !moviesRes || !horrorsRes || !varietyRes) return
+		
 		const combined = [
 			...(varietyRes ?? []),
 			...(dramasRes ?? []),

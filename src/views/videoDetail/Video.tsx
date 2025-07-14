@@ -3,6 +3,8 @@ import axios from "axios";
 import "./Video.scss";
 import { useParams } from "react-router-dom";
 
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY
+
 export default function Video(): JSX.Element {
 	//get video id from url
 	const { id } = useParams()
@@ -11,35 +13,27 @@ export default function Video(): JSX.Element {
 	const [error, setError] = useState<Error | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
 
-	//movie url
 	useEffect(() => {
-
 		let isCancelled = false
 
 		async function fetchData() {
-			const requestUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=a141a3a7775642eba7f3a71405038590&language=en-US`
-
 			try {
 				setLoading(true)
-				const request = await axios.get(requestUrl)
-				const result = request.data.results
-
+				const response = await axios.get(
+					`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`
+				)
 				if (!isCancelled) {
-					if (result.length > 0) {
-						setTrailerUrl(result[0].key)
-						return request
+					const results = response.data.results
+					if (results.length > 0 && results[0]?.key) {
+						setTrailerUrl(results[0].key)
 					} else {
 						setTrailerUrl("")
 					}
 				}
-
-			} catch (e) {
-				if (!isCancelled) {
-					setError(e as Error)
-					console.warn(e)
-				}
+			} catch (error) {
+				if (!isCancelled) setError(error as Error)
 			} finally {
-				setLoading(false)
+				if (!isCancelled) setLoading(false)
 			}
 		}
 
@@ -48,9 +42,7 @@ export default function Video(): JSX.Element {
 		return () => {
 			isCancelled = true
 		}
-
 	}, [movieId])
-
 
 	return (
 		<main className="video-detail"> {
