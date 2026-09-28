@@ -1,7 +1,8 @@
-import React, { JSX, useState } from "react";
+import { useState } from "react";
+import type { JSX } from "react";
 import "./Favorites.scss";
 import { Link } from "react-router-dom";
-import { Movie } from "../../data/types/types";
+import type { Movie } from "../../data/types/types";
 import PopupCard from "../../components/PopupCard";
 
 interface FavoritesPropsTypes {

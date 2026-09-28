@@ -1,9 +1,9 @@
-import { JSX, useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import type { JSX } from "react";
 import "./Video.scss";
 import { useParams } from "react-router-dom";
 
-const API_KEY = process.env.REACT_APP_TMDB_API_KEY
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 export default function Video(): JSX.Element {
 	//get video id from url
@@ -19,11 +19,12 @@ export default function Video(): JSX.Element {
 		async function fetchData() {
 			try {
 				setLoading(true)
-				const response = await axios.get(
+				const response = await fetch(
 					`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`
 				)
 				if (!isCancelled) {
-					const results = response.data.results
+					const data = await response.json()
+					const results = data.results
 					if (results.length > 0 && results[0]?.key) {
 						setTrailerUrl(results[0].key)
 					} else {
@@ -45,8 +46,10 @@ export default function Video(): JSX.Element {
 	}, [movieId])
 
 	return (
-		<main className="video-detail"> {
-			loading ? <>Loading.. </> :
+		<main className="video-detail">
+			{error && <>Something went wrong </>}
+
+			{loading ? <>Loading.. </> :
 				(trailerUrl !== "" ?
 					(<div className="video-row">
 						<iframe className="responsive" src={`https://www.youtube.com/embed/${trailerUrl}`}

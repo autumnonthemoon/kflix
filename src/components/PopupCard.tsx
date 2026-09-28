@@ -1,5 +1,6 @@
-import { JSX, useEffect } from "react";
-import { Movie } from "../data/types/types";
+import { useEffect } from "react";
+import type { JSX } from "react";
+import type { Movie } from "../data/types/types";
 import "./PopupCard.scss"
 import { Link } from "react-router-dom";
 

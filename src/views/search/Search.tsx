@@ -1,8 +1,9 @@
-import { JSX, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
+import type { JSX } from "react"
 import "./Search.scss"
 import requests from "../../data/requests"
 import { Link } from "react-router-dom"
-import { Movie } from "../../data/types/types"
+import type { Movie } from "../../data/types/types"
 import PopupCard from "../../components/PopupCard"
 import useFetch from "../../hooks/useFetch"
 
@@ -36,7 +37,7 @@ export default function Search(props: SearchPropsTypes): JSX.Element {
 
 	useEffect(() => {
 		if (!dramasRes || !moviesRes || !horrorsRes || !varietyRes) return
-		
+
 		const combined = [
 			...(varietyRes ?? []),
 			...(dramasRes ?? []),
@@ -62,12 +63,27 @@ export default function Search(props: SearchPropsTypes): JSX.Element {
 		setShowPopup(undefined)
 	}
 
+	const isLoading =
+		loadingDramas ||
+		loadingMovies ||
+		loadingHorrors ||
+		loadingVariety
+
+	const hasError =
+		errorDramas ||
+		errorMovies ||
+		errorHorrors ||
+		errorVariety
+
+	if (isLoading) return <p>Loading...</p>
+	if (hasError) return <p>Something went wrong.</p>
+
 	return <main className="search-container">
-		<input type="text" 
-			className="search-bar" 
-			placeholder="Search something.." 
-			value={searchTerm} onChange={(e) => 
-			setSearchTerm(e.target.value)} 
+		<input type="text"
+			className="search-bar"
+			placeholder="Search something.."
+			value={searchTerm} onChange={(e) =>
+				setSearchTerm(e.target.value)}
 		/>
 
 		<div className="results">

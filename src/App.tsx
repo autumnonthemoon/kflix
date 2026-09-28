@@ -1,4 +1,5 @@
-import React, { useState, useEffect, JSX } from "react";
+import { useState, useEffect } from "react";
+import type { JSX } from "react";
 import {
 	BrowserRouter,
 	Routes,
@@ -9,7 +10,7 @@ import Home from "./views/home/Home";
 import Favorites from "./views/favorites/Favorites";
 import Video from "./views/videoDetail/Video";
 import requests from "./data/requests";
-import { Movie } from "./data/types/types"
+import type { Movie } from "./data/types/types"
 import Nav from "./components/Nav";
 import Search from "./views/search/Search";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -95,7 +96,7 @@ export default function App(): JSX.Element {
 	return (
 		<ThemeProvider>
 			<div className="App">
-				<BrowserRouter basename={process.env.NODE_ENV === "production" ? "/websitedemo/movie-app" : ""}>
+				<BrowserRouter basename={import.meta.env.PROD ? "/websitedemo/movie-app" : undefined}>
 					<Nav show={show} />
 					<Routes>
 						<Route path="/"

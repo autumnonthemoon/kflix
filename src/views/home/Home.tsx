@@ -1,6 +1,6 @@
 import Row from "../../components/Row";
 import Banner from "../../components/Banner";
-import { Movie } from "../../data/types/types";
+import type { Movie } from "../../data/types/types";
 import { useState } from "react";
 import PopupCard from "../../components/PopupCard";
 
