@@ -359,12 +359,12 @@
 
 				.thumbnail-icons-actions {
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
 					color: rgb(181, 179, 179);
 					justify-content: end;
 
 					svg {
-						width: 40px;
+						width: 34px;
 						height: 40px;
 						pointer-events: all;
 						padding: 4px 0;
