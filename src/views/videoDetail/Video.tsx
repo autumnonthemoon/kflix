@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 export default function Video(): JSX.Element {
-	//get video id from url
 	const { id } = useParams()
 	const movieId = Number(id)
 	const [trailerUrl, setTrailerUrl] = useState<string>("")
@@ -29,10 +28,13 @@ export default function Video(): JSX.Element {
 						setTrailerUrl(results[0].key)
 					} else {
 						setTrailerUrl("")
+
 					}
 				}
 			} catch (error) {
-				if (!isCancelled) setError(error as Error)
+				if (!isCancelled) {
+					setError(error as Error)
+				}
 			} finally {
 				if (!isCancelled) setLoading(false)
 			}
@@ -47,8 +49,6 @@ export default function Video(): JSX.Element {
 
 	return (
 		<main className="video-detail">
-			{error && <>Something went wrong </>}
-
 			{loading ? <>Loading.. </> :
 				(trailerUrl !== "" ?
 					(<div className="video-row">
@@ -57,6 +57,9 @@ export default function Video(): JSX.Element {
 							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 					</div>)
 					:
-					(<div className="no-video">No video found..</div>))}</main>
+					<iframe className="responsive" src={`https://www.youtube.com/embed/Wndx_3B0lgc?si=7BUm7jNLmSNqg_tK`}
+						title="YouTube video player"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>)}
+		</main>
 	)
 }

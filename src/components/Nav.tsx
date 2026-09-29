@@ -8,8 +8,7 @@ interface NavPropsTypes {
 	show: boolean
 }
 
-export default function Nav(props: NavPropsTypes): JSX.Element {
-	const { show } = props
+export default function Nav({ show }: NavPropsTypes): JSX.Element {
 	const location = useLocation()
 	const { theme, toggleTheme } = useTheme()
 	const [showMenu, setShowMenu] = useState<boolean>(false)

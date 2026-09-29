@@ -12,9 +12,7 @@ interface PopupCardPropsTypes {
 	handleFave: (id: string) => void
 }
 
-export default function PopupCard(props: PopupCardPropsTypes): JSX.Element {
-	const { movie, removeMovie, baseUrl, handleFave, favorite } = props
-
+export default function PopupCard({ movie, removeMovie, baseUrl, handleFave, favorite }: PopupCardPropsTypes): JSX.Element {
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") {

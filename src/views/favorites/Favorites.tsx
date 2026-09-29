@@ -12,8 +12,7 @@ interface FavoritesPropsTypes {
 	favorite: string[]
 }
 
-export default function Favorites(props: FavoritesPropsTypes): JSX.Element {
-	const { findFavorite, baseUrl, handleFave, favorite } = props
+export default function Favorites({ findFavorite, baseUrl, handleFave, favorite }: FavoritesPropsTypes): JSX.Element {
 	const [showPopup, setShowPopup] = useState<Movie>()
 
 	const removeMovie = () => {
@@ -24,10 +23,12 @@ export default function Favorites(props: FavoritesPropsTypes): JSX.Element {
 		<main className="favorites-container">
 			<h1>Favorites</h1>
 			{findFavorite.length > 0 ? (<div className="row-favorite">
-				{findFavorite.map(movie => (
+				{findFavorite.map((movie, index) => (
 					movie.vote_average !== "" && movie.poster_path && movie.backdrop_path &&
 					(
-						<div className="poster-image poster-small" key={movie.id} onClick={() => setShowPopup(movie)}>
+						<div className="poster-image poster-small" key={movie.id} onClick={() => setShowPopup(movie)} style={{
+							animationDelay: `${index * 100}ms`
+						}}>
 							<img className="row-poster row-posterSmall"
 								src={`${baseUrl}${movie.backdrop_path}`} alt={movie.name}
 							/>

@@ -56,7 +56,7 @@
 
 				.thumbnail-icons-actions {
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
 					color: rgb(181, 179, 179);
 					justify-content: end;
 					margin-top: 1rem;
@@ -74,12 +74,6 @@
 							&.favorite {
 								fill: #ff006c;
 							}
-
-							// &.notFavorite {
-							//     fill: #FFF;
-							// }
-
-							// fill: #FFF;
 						}
 					}
 

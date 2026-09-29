@@ -24,8 +24,7 @@ interface SearchPropsTypes {
 	favorite: string[]
 }
 
-export default function Search(props: SearchPropsTypes): JSX.Element {
-	const { baseUrl, handleFave, favorite } = props
+export default function Search({ baseUrl, handleFave, favorite }: SearchPropsTypes): JSX.Element {
 	const [allContent, setAllContent] = useState<FetchedItem[]>([])
 	const [filteredContent, setFilteredContent] = useState<FetchedItem[]>([])
 	const [searchTerm, setSearchTerm] = useState<string>("")
@@ -87,8 +86,10 @@ export default function Search(props: SearchPropsTypes): JSX.Element {
 		/>
 
 		<div className="results">
-			{filteredContent.length > 0 && filteredContent.map((movie: Movie, index) => {
-				return movie.backdrop_path && <div className="poster-image poster-small" key={index} onClick={() => setShowPopup(movie)}>
+			{filteredContent.length > 0 && filteredContent.map((movie: Movie, index: number) => {
+				return movie.backdrop_path && <div className="poster-image poster-small" key={index} onClick={() => setShowPopup(movie)} style={{
+					animationDelay: `${index * 100}ms`
+				}}>
 					<img className="row-poster row-posterSmall"
 						src={`${baseUrl}${movie.backdrop_path}`} alt={movie.name}
 					/>
@@ -108,6 +109,8 @@ export default function Search(props: SearchPropsTypes): JSX.Element {
 					</div>
 				</div>
 			})}
+
+			{filteredContent.length === 0 && searchTerm !== "" && "No matches found.."}
 		</div>
 
 		<div className={`popup-container ${showPopup ? "show" : "hide"}`}>
