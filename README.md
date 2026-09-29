@@ -2,6 +2,10 @@
 
 A movie streaming platform interface built with React and TypeScript. The project focuses on building a responsive, component-based interface and integrating TMDB API.
 
+### Demo
+View demo <a href="https://thuhang.nl/websitedemo/movie-app/">here</a>
+
+
 ## Features
 
 * Browse movies and TV shows
