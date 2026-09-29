@@ -49,6 +49,7 @@ export default function Video(): JSX.Element {
 
 	return (
 		<main className="video-detail">
+			{error && "..Something went wrong"}
 			{loading ? <>Loading.. </> :
 				(trailerUrl !== "" ?
 					(<div className="video-row">
