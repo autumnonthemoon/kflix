@@ -31,6 +31,7 @@ export default function Favorites({ findFavorite, baseUrl, handleFave, favorite 
 						}}>
 							<img className="row-poster row-posterSmall"
 								src={`${baseUrl}${movie.backdrop_path}`} alt={movie.name}
+								loading="lazy"
 							/>
 							<div className="info">
 								<div className="rating">Rating: {movie.vote_average} </div>

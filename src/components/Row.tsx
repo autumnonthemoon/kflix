@@ -92,6 +92,7 @@ export default function Row({ title, isLargeRow = false, movies, favorite, handl
 							onClick={() => setShowPopupCard(movie)}
 						>
 							<img className={"row-poster" + (isLargeRow ? " row-posterLarge" : " row-posterSmall")}
+								loading="lazy"
 								src={`${baseUrl}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} alt={movie.name}
 								onAnimationEnd={() => {
 									if (index >= 6) {
